@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* ScoutsLabs inspired palette */
+  --color-brand-moss: #1A3C2F;
+  /* Deep refined green for text/headings */
+  --color-brand-leaf: #4D7C5E;
+  /* Secondary soft green */
+  --color-brand-mustard: #EAB308;
+  /* Playful yellow accent */
+  --color-brand-cream: #FDFCF8;
+  /* Warm background */
+  --color-brand-sand: #F2F0E9;
+  /* Secondary background */
+  --color-brand-white: #FFFFFF;
+
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "Plus Jakarta Sans", serif;
+  --font-display: "Fraunces", serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes wiggle {
+
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+
+  @keyframes loop-scroll {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  --animate-loop-scroll: loop-scroll 15s linear infinite;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    @apply antialiased text-brand-moss bg-brand-cream;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
+    @apply tracking-tight font-semibold text-brand-moss;
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+
+  /* Soft, heavy rounded corners from reference */
+  .rounded-scout {
+    border-radius: 2rem;
+  }
+}
+
+@layer utilities {
+  .pause {
+    animation-play-state: paused;
+  }
+}
