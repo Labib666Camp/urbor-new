@@ -21,7 +21,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="flex flex-col min-h-screen font-sans bg-slate-50 text-slate-900">
+      <div className="flex flex-col min-h-screen font-sans bg-brand-cream text-brand-moss">
         <Navbar />
         <main className="flex-grow">
           <Routes>

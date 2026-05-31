@@ -40,7 +40,7 @@ const PartnerMarquee = () => {
                     >
                         {[...partners, ...partners, ...partners].map((partner, index) => (
                             <div key={index} className="h-12 w-auto flex-shrink-0 grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300">
-                                <img src={partner.logo} alt={partner.name} className="h-full w-auto object-contain" />
+                                <img loading="lazy" decoding="async" src={partner.logo} alt={partner.name} className="h-full w-auto object-contain" />
                             </div>
                         ))}
                     </motion.div>

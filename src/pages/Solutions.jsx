@@ -68,7 +68,7 @@ const AnalyticsSection = () => (
                 className="relative z-10"
             >
                 <div className="absolute -inset-4 bg-brand-mustard rounded-[2.5rem] rotate-3 -z-10 shadow-xl" />
-                <img src="/assets/app_screens/homepage.png" alt="Home Screen" className="w-full rounded-[2rem] border-4 border-brand-white shadow-2xl" />
+                <img loading="lazy" decoding="async" src="/assets/app_screens/homepage.png" alt="Home Screen" className="w-full rounded-[2rem] border-4 border-brand-white shadow-2xl" />
             </motion.div>
 
             {/* Screen 2 (Center - Prominent) */}
@@ -80,7 +80,7 @@ const AnalyticsSection = () => (
                 className="relative z-20 md:-mt-12"
             >
                 <div className="absolute -inset-4 bg-brand-moss rounded-[2.5rem] -rotate-2 -z-10 shadow-2xl" />
-                <img src="/assets/app_screens/analytics.png" alt="Analytics Screen" className="w-full rounded-[2rem] border-4 border-brand-white shadow-2xl" />
+                <img loading="lazy" decoding="async" src="/assets/app_screens/analytics.png" alt="Analytics Screen" className="w-full rounded-[2rem] border-4 border-brand-white shadow-2xl" />
             </motion.div>
 
             {/* Screen 3 */}
@@ -92,7 +92,7 @@ const AnalyticsSection = () => (
                 className="relative z-10"
             >
                 <div className="absolute -inset-4 bg-brand-leaf/40 rounded-[2.5rem] rotate-6 -z-10 shadow-xl" />
-                <img src="/assets/app_screens/tools.png" alt="Tools Screen" className="w-full rounded-[2rem] border-4 border-brand-white shadow-2xl" />
+                <img loading="lazy" decoding="async" src="/assets/app_screens/tools.png" alt="Tools Screen" className="w-full rounded-[2rem] border-4 border-brand-white shadow-2xl" />
             </motion.div>
         </div>
 
@@ -131,13 +131,13 @@ const Solutions = () => {
                 <VideoCard
                     title="Soil Remediation"
                     text="We employ a multi-step bio-remediation process. By introducing gypsum and organic amendments, we displace sodium ions from the soil particles. This chemical intervention is supported by the strategic planting of halophytes like Hatishur, which actively extract salt from the topsoil."
-                    video="/assets/media/section_1.mp4"
+                    video="/assets/media/section_1_compressed.mp4"
                 />
 
                 <VideoCard
                     title="Native Vertical Farming"
                     text="To maximize land use efficiency in saline-prone areas, we implement vertical farming structures using native, salt-tolerant creepers. This method not only bypasses strict soil dependency but also creates a micro-climate that reduces evaporation and salt crystallization on the soil surface."
-                    video="/assets/media/site_bg.mp4"
+                    video="/assets/media/site_bg_compressed.mp4"
                     reverse={true}
                 />
 

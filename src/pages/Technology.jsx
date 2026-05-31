@@ -28,7 +28,7 @@ const AppMockup = ({ src, alt, className, rotation = 0 }) => (
         transition={{ duration: 0.8 }}
         className={`relative shrink-0 w-[280px] md:w-[320px] rounded-[2.5rem] border-8 border-brand-moss bg-brand-moss overflow-hidden shadow-2xl ${className}`}
     >
-        <img src={src} alt={alt} className="w-full h-auto object-contain bg-brand-sand" />
+        <img loading="lazy" decoding="async" src={src} alt={alt} className="w-full h-auto object-contain bg-brand-sand" />
         {/* Gloss Effect */}
         <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
     </motion.div>
