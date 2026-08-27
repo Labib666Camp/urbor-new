@@ -1,93 +1,164 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300..700&family=Inter:wght@300..600&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
+/* ============================================================
+   URBOR DESIGN SYSTEM
+   Warm cream canvas (Trajectory) + structural precision (Linear).
+   Rules of the system:
+     - Type weight tops out at 500. Never 700+.
+     - Display type carries negative tracking and ~1.02 leading.
+     - Borders are 1px hairlines, never heavier.
+     - Radii live in the 6-20px range. No blobs.
+     - Shadows are ambient and near-invisible. Elevation is
+       communicated by border contrast, not drop shadows.
+     - Accents are desaturated and used once per section.
+   ============================================================ */
+
 @theme {
-  /* ScoutsLabs inspired palette */
-  --color-brand-moss: #1A3C2F;
-  /* Deep refined green for text/headings */
-  --color-brand-leaf: #4D7C5E;
-  /* Secondary soft green */
-  --color-brand-mustard: #EAB308;
-  /* Playful yellow accent */
-  --color-brand-cream: #FDFCF8;
-  /* Warm background */
-  --color-brand-sand: #F2F0E9;
-  /* Secondary background */
-  --color-brand-white: #FFFFFF;
+  /* --- Surfaces --- */
+  --color-canvas: #FAFAF2;        /* page ground, warm cream */
+  --color-surface: #FFFFFE;       /* raised cards */
+  --color-sunk: #F2F2E6;          /* wells, inset panels */
 
-  --font-sans: "Inter", sans-serif;
-  --font-serif: "Plus Jakarta Sans", serif;
-  --font-display: "Fraunces", serif;
+  /* --- Ink --- */
+  --color-ink: #16241D;           /* primary, deep moss-black */
+  --color-ink-muted: #55665C;     /* body copy */
+  --color-ink-faint: #8A968E;     /* meta, captions, labels */
 
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-wiggle: wiggle 1s ease-in-out infinite;
+  /* --- Lines (hairlines only) --- */
+  --color-line: #16241D14;        /* 8% */
+  --color-line-strong: #16241D29; /* 16% */
 
-  @keyframes float {
+  /* --- Brand --- */
+  --color-moss: #1B3328;          /* dark sections */
+  --color-moss-deep: #101F18;     /* darkest ground */
+  --color-leaf: #4D7C5E;          /* mid green, interactive */
 
-    0%,
-    100% {
-      transform: translateY(0);
-    }
+  /* --- Accents: desaturated, one per section --- */
+  --color-mint: #C9D9C2;
+  --color-sand: #E8D5B0;
+  --color-clay: #DDB79B;
+  --color-sky: #C6D5E2;
+  --color-amber: #A8801F;         /* muted mustard, small type only */
 
-    50% {
-      transform: translateY(-20px);
-    }
+  /* --- Type --- */
+  --font-display: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* --- Radii --- */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* --- Motion --- */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --animate-marquee: marquee 46s linear infinite;
+  --animate-pulse-dot: pulse-dot 2.4s var(--ease-in-out-quart) infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
   }
 
-  @keyframes wiggle {
-
-    0%,
-    100% {
-      transform: rotate(-3deg);
-    }
-
-    50% {
-      transform: rotate(3deg);
-    }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1;   transform: scale(1); }
+    50%      { opacity: 0.4; transform: scale(0.82); }
   }
-
-  @keyframes loop-scroll {
-    from {
-      transform: translateX(0);
-    }
-
-    to {
-      transform: translateX(-100%);
-    }
-  }
-
-  --animate-loop-scroll: loop-scroll 15s linear infinite;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    zoom: 0.7;
-    @apply antialiased text-brand-moss bg-brand-cream;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-serif);
-    @apply tracking-tight font-semibold text-brand-moss;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
   }
 
   body {
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    letter-spacing: -0.011em;
   }
 
-  /* Soft, heavy rounded corners from reference */
-  .rounded-scout {
-    border-radius: 2rem;
+  /* Display type: tight, restrained weight, near-solid leading. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+
+  h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  p { text-wrap: pretty; }
+
+  ::selection {
+    background-color: var(--color-mint);
+    color: var(--color-moss-deep);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-leaf);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Respect reduced-motion across every animated surface. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
 @layer utilities {
-  .pause {
+  /* Eyebrow label: mono, uppercase, wide — the system's one loud voice. */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Fluid display sizes — no arbitrary breakpoint jumps. */
+  .text-display  { font-size: clamp(2.75rem, 7.2vw, 5.5rem); }
+  .text-headline { font-size: clamp(2rem, 4.2vw, 3.25rem); }
+  .text-title    { font-size: clamp(1.25rem, 2vw, 1.625rem); }
+
+  /* Edge fade for marquees and overflow rails. */
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  /* Film grain — the Trajectory texture cue, kept very low. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .pause-on-hover:hover [style*="animation"],
+  .pause-on-hover:hover .marquee-track {
     animation-play-state: paused;
   }
 }
