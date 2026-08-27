@@ -1,151 +1,159 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Check, ShieldCheck, Sprout, BarChart3, ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import {
+  Container, Section, SectionHead, Reveal, RevealGroup, RevealItem,
+  Eyebrow, Button, Card, LiveTag, GridLines,
+} from '../components/ui';
 
-const VideoCard = ({ title, text, video, reverse }) => (
-    <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className={`flex flex-col ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 mb-32`}
-    >
-        <div className="md:w-1/2 relative group">
-            {/* Video Container */}
-            <div className="relative h-[500px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-brand-white">
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-[2s]"
-                >
-                    <source src={video} type="video/mp4" />
-                </video>
-                <div className="absolute inset-0 bg-brand-moss/20 mix-blend-multiply" />
-            </div>
+const METHODS = [
+  {
+    index: '01',
+    title: 'Soil remediation',
+    body: 'A multi-step bio-remediation process. Gypsum and organic amendments displace sodium ions from soil particles, while halophytes like Hatishur are planted to actively draw salt out of the topsoil.',
+    video: '/assets/media/section_1.mp4',
+    poster: '/assets/media/section_1.jpg',
+    tags: ['Gypsum amendment', 'Halophyte planting', 'Topsoil extraction'],
+  },
+  {
+    index: '02',
+    title: 'Native vertical farming',
+    body: 'Vertical structures planted with native salt-tolerant creepers bypass strict soil dependency and maximise land-use efficiency, forming a micro-climate that slows evaporation and surface salt crystallisation.',
+    video: '/assets/media/site_bg.mp4',
+    poster: '/assets/media/section_3.jpg',
+    tags: ['Salt-tolerant creepers', 'Micro-climate', 'Land efficiency'],
+  },
+];
 
-            {/* Badge */}
-            <div className={`absolute top-8 ${reverse ? 'left-8' : 'right-8'} bg-brand-white/90 backdrop-blur text-brand-moss px-5 py-2 rounded-full font-bold shadow-lg flex items-center gap-2 text-sm`}>
-                <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" /> Live Feed
-            </div>
+const CAPABILITIES = [
+  { title: 'Real-time monitoring', body: 'Soil salinity, pH and moisture tracked continuously through IoT probes placed across the plot.' },
+  { title: 'Predictive alerts', body: 'AI-generated warnings for tidal surges and salinity spikes, issued up to fourteen days ahead.' },
+  { title: 'Crop recommendations', body: 'Salt-tolerant crop guidance matched to the specific soil profile of an individual field.' },
+];
+
+const SCREENS = [
+  { src: '/assets/app_screens/homepage.png', alt: 'Farmer dashboard', label: 'Dashboard' },
+  { src: '/assets/app_screens/analytics.png', alt: 'Salinity analytics', label: 'Analytics' },
+  { src: '/assets/app_screens/tools.png', alt: 'Field tools', label: 'Tools' },
+];
+
+// Alternating media/text rows. The index number does the structural work that
+// heavy rules and borders used to do.
+const MethodRow = ({ method, reverse }) => (
+  <div className="grid items-center gap-10 border-t border-line py-14 md:grid-cols-12 md:gap-16 md:py-20">
+    <Reveal className={reverse ? 'md:order-2 md:col-span-7' : 'md:col-span-7'}>
+      <figure className="relative overflow-hidden rounded-xl border border-line">
+        <video
+          autoPlay loop muted playsInline poster={method.poster}
+          className="aspect-[4/3] w-full object-cover"
+        >
+          <source src={method.video} type="video/mp4" />
+        </video>
+        <div className="absolute left-5 top-5">
+          <LiveTag tone="dark">Field footage</LiveTag>
         </div>
+      </figure>
+    </Reveal>
 
-        <div className="md:w-1/2">
-            <h3 className="text-4xl md:text-5xl font-serif text-brand-moss mb-6 leading-tight">{title}</h3>
-            <p className="text-xl text-brand-moss/70 mb-8 leading-relaxed font-sans">
-                {text}
-            </p>
-
-            <div className="flex flex-wrap gap-3">
-                {['Eco-Friendly', 'Cost Effective', 'Scalable'].map((tag) => (
-                    <span key={tag} className="px-4 py-2 bg-brand-moss/5 border border-brand-moss/10 rounded-full text-brand-moss/80 text-sm font-bold">
-                        {tag}
-                    </span>
-                ))}
-            </div>
-        </div>
-    </motion.div>
+    <Reveal delay={0.08} className={reverse ? 'md:order-1 md:col-span-5' : 'md:col-span-5'}>
+      <span className="font-mono text-[0.6875rem] tracking-[0.14em] text-ink-faint">{method.index}</span>
+      <h2 className="text-headline mt-5">{method.title}</h2>
+      <p className="mt-5 text-lg leading-relaxed text-ink-muted">{method.body}</p>
+      <ul className="mt-8 flex flex-wrap gap-2">
+        {method.tags.map((t) => (
+          <li key={t} className="rounded-full border border-line px-3.5 py-1.5 text-[0.8125rem] text-ink-muted">
+            {t}
+          </li>
+        ))}
+      </ul>
+    </Reveal>
+  </div>
 );
 
-const AnalyticsSection = () => (
-    <div className="mb-32 relative">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-4xl md:text-5xl font-serif text-brand-moss mb-6">Precision Analytics</h2>
-            <p className="text-xl text-brand-moss/60">
-                Data-driven insights for proactive farm management.
-            </p>
-        </div>
+const Solutions = () => (
+  <>
+    <section className="relative overflow-hidden pt-28 pb-14 md:pt-32 md:pb-16">
+      <GridLines className="opacity-70" />
+      <Container className="relative z-10">
+        <Reveal><Eyebrow>Methodology</Eyebrow></Reveal>
+        <Reveal delay={0.05}>
+          <h1 className="text-display mt-7 max-w-[15ch]">
+            Restoring balance to <span className="text-ink-faint">coastal soil.</span>
+          </h1>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p className="mt-8 max-w-xl text-lg leading-relaxed text-ink-muted">
+            An integrated approach combining physical remediation, adaptive
+            farming and applied data science — designed to be run by the
+            communities who farm the land.
+          </p>
+        </Reveal>
+      </Container>
+    </section>
 
-        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-            {/* Yellow Background Decoration */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[80%] bg-brand-mustard/20 -rotate-3 rounded-[4rem] blur-3xl -z-10" />
+    <Section tone="canvas" className="py-0">
+      <Container>
+        {METHODS.map((m, i) => (
+          <MethodRow key={m.title} method={m} reverse={i % 2 === 1} />
+        ))}
+      </Container>
+    </Section>
 
-            {/* Screen 1 */}
-            <motion.div
-                initial={{ y: 40, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                className="relative z-10"
-            >
-                <div className="absolute -inset-4 bg-brand-mustard rounded-[2.5rem] rotate-3 -z-10 shadow-xl" />
-                <img src="/assets/app_screens/homepage.png" alt="Home Screen" className="w-full rounded-[2rem] border-4 border-brand-white shadow-2xl" />
-            </motion.div>
+    {/* Analytics */}
+    <Section tone="sunk">
+      <Container>
+        <SectionHead
+          eyebrow="Precision analytics"
+          align="center"
+          title="Data-driven insight for proactive farm management."
+          lede="The same field readings that guide remediation drive the app farmers carry."
+        />
 
-            {/* Screen 2 (Center - Prominent) */}
-            <motion.div
-                initial={{ y: 80, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="relative z-20 md:-mt-12"
-            >
-                <div className="absolute -inset-4 bg-brand-moss rounded-[2.5rem] -rotate-2 -z-10 shadow-2xl" />
-                <img src="/assets/app_screens/analytics.png" alt="Analytics Screen" className="w-full rounded-[2rem] border-4 border-brand-white shadow-2xl" />
-            </motion.div>
-
-            {/* Screen 3 */}
-            <motion.div
-                initial={{ y: 40, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="relative z-10"
-            >
-                <div className="absolute -inset-4 bg-brand-leaf/40 rounded-[2.5rem] rotate-6 -z-10 shadow-xl" />
-                <img src="/assets/app_screens/tools.png" alt="Tools Screen" className="w-full rounded-[2rem] border-4 border-brand-white shadow-2xl" />
-            </motion.div>
-        </div>
-
-        {/* Feature List */}
-        <div className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-                { title: "Real-time Monitoring", desc: "Track soil salinity, pH, and moisture levels instantly via IoT sensors." },
-                { title: "Predictive Alerts", desc: "Receive AI-generated warnings for tidal surges and salinity spikes up to 14 days ahead." },
-                { title: "Crop Recommendations", desc: "Get tailored advice on salt-tolerant crops based on your specific soil profile." }
-            ].map((item, idx) => (
-                <div key={idx} className="bg-brand-white p-8 rounded-3xl shadow-sm border border-brand-sand">
-                    <h4 className="text-xl font-bold font-serif text-brand-moss mb-3">{item.title}</h4>
-                    <p className="text-brand-moss/70">{item.desc}</p>
+        <RevealGroup className="grid gap-6 sm:grid-cols-3" stagger={0.08}>
+          {SCREENS.map((s) => (
+            <RevealItem key={s.label}>
+              <figure>
+                <div className="overflow-hidden rounded-lg border border-line bg-surface">
+                  <img src={s.src} alt={s.alt} className="w-full object-cover" />
                 </div>
-            ))}
-        </div>
-    </div>
-);
+                <figcaption className="eyebrow mt-4 block text-center text-ink-faint">{s.label}</figcaption>
+              </figure>
+            </RevealItem>
+          ))}
+        </RevealGroup>
 
-const Solutions = () => {
-    return (
-        <div className="bg-brand-cream min-h-screen pt-32 pb-24">
-            <div className="container mx-auto px-6">
+        <RevealGroup className="mt-12 grid gap-6 md:grid-cols-3" stagger={0.06}>
+          {CAPABILITIES.map((c) => (
+            <RevealItem key={c.title}>
+              <Card className="h-full p-7">
+                <h3 className="font-display text-lg font-medium tracking-[-0.02em]">{c.title}</h3>
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-muted">{c.body}</p>
+              </Card>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </Container>
+    </Section>
 
-                <div className="text-center max-w-4xl mx-auto mb-24">
-                    <span className="text-brand-leaf font-bold tracking-widest uppercase text-sm mb-4 block">Comprehensive Care</span>
-                    <h1 className="text-5xl md:text-7xl font-serif text-brand-moss mb-8">
-                        Restoring Balance to<br />
-                        <span className="text-brand-mustard decoration-wavy underline decoration-brand-moss/10">Coastal Soil.</span>
-                    </h1>
-                    <p className="text-xl text-brand-moss/60 max-w-2xl mx-auto font-sans">
-                        Our integrated approach combines physical remediation, adaptive farming, and advanced data science.
-                    </p>
-                </div>
-
-                <VideoCard
-                    title="Soil Remediation"
-                    text="We employ a multi-step bio-remediation process. By introducing gypsum and organic amendments, we displace sodium ions from the soil particles. This chemical intervention is supported by the strategic planting of halophytes like Hatishur, which actively extract salt from the topsoil."
-                    video="/assets/media/section_1.mp4"
-                />
-
-                <VideoCard
-                    title="Native Vertical Farming"
-                    text="To maximize land use efficiency in saline-prone areas, we implement vertical farming structures using native, salt-tolerant creepers. This method not only bypasses strict soil dependency but also creates a micro-climate that reduces evaporation and salt crystallization on the soil surface."
-                    video="/assets/media/site_bg.mp4"
-                    reverse={true}
-                />
-
-                <AnalyticsSection />
-
+    <Section tone="canvas" className="pb-24">
+      <Container>
+        <Reveal>
+          <div className="flex flex-col items-start justify-between gap-8 rounded-xl border border-line bg-surface p-10 md:flex-row md:items-center md:p-14">
+            <div className="max-w-lg">
+              <h2 className="font-display text-2xl font-medium tracking-[-0.03em] md:text-3xl">
+                See the architecture behind it.
+              </h2>
+              <p className="mt-3 text-ink-muted">
+                Remote sensing, IoT mesh networks and the predictive models that tie them together.
+              </p>
             </div>
-        </div>
-    );
-};
+            <Button as={Link} to="/technology" size="lg" className="shrink-0">
+              View the technology
+            </Button>
+          </div>
+        </Reveal>
+      </Container>
+    </Section>
+  </>
+);
 
 export default Solutions;
